@@ -15,7 +15,7 @@ constructor(page: Page) {
 }
 
 async goToLoginPage() {
-    await this.page.goto('/login');
+    await this.page.goto('https://automationexercise.com/login',{ waitUntil: 'domcontentloaded'});
 }
 
 async login(email: string, password: string) {

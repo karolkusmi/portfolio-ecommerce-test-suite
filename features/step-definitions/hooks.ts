@@ -1,5 +1,6 @@
 import {Browser, Page, chromium} from "@playwright/test";
 import {Before, After} from "@cucumber/cucumber";
+import 'dotenv/config';
 
 export let page: Page;
 export let browser: Browser;
