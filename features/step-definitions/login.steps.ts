@@ -21,3 +21,13 @@ When("I log in with valid credentials", async function() {
 Then("I should see the home page", async function(){
     await expect(page.getByText("Logged in as")).toBeVisible();
 })
+
+When("I log in with invalid credentials", async function(){
+    const loginPage = new LoginPage(page);
+    await loginPage.login("pepe@hotmail.com","hola123");
+
+})
+
+Then("I should see an error message", async function() {
+    await expect(page.getByText("Your email or password is incorrect!")).toBeVisible();
+})
