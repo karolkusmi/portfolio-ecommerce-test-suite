@@ -1,34 +1,39 @@
 import {When, Then} from '@cucumber/cucumber';
 import {page} from './hooks';
 import {expect} from '@playwright/test';
+import {CartPage} from '../../pages/CartPage';
+import {ProductsPage} from '../../pages/ProductsPage';
 
 
 let firstProductName: string = "";
 
 
 When("I add the first product to the cart", async function() {
-    firstProductName = (await page.locator(".single-products p").first().textContent())!;
-    await page.locator(".add-to-cart").first().click();
-    await page.getByText("Added!").waitFor();
-    await page.goto("https://automationexercise.com/view_cart");
+    const productsPage = new ProductsPage(page);
+    const cartPage = new CartPage(page);
+    firstProductName = await productsPage.getFirstProductName();
+    await productsPage.addFirstProductToCart();
+    await cartPage.goToCartPage();
 })
 
 Then("I should see the first product visible in the cart", async function() {
-    await expect(page.getByText(firstProductName)).toBeVisible();
+    const cartPage = new CartPage(page);
+    await expect(await cartPage.getFirstProductNameCell(firstProductName)).toBeVisible();
 })
 
 When("I add the first product to the cart twice", async function() {
-    firstProductName = (await page.locator(".single-products p").first().textContent())!;
-    await page.locator(".add-to-cart").first().click();
-    await page.getByText("Added!").waitFor();
-    await page.goto("https://automationexercise.com/view_cart");
-    await page.goto("https://automationexercise.com/products");
-    await page.locator(".add-to-cart").first().click();
-    await page.getByText("Added!").waitFor();
-    await page.goto("https://automationexercise.com/view_cart");
+    const productsPage =  new ProductsPage(page);
+    const cartPage = new CartPage(page);
+    firstProductName = await productsPage.getFirstProductName();
+    await productsPage.addFirstProductToCart();
+    await cartPage.goToCartPage();
+    await productsPage.goToProductsPage();
+    await productsPage.addFirstProductToCart();
+    await cartPage.goToCartPage();
 })
 
 Then("I should see that the quantity of the product is two", async function() {
-    await expect(page.locator("tr", {hasText: firstProductName}).locator(".cart_quantity")).toHaveText("2");
+    const cartPage = new CartPage(page);
+    await expect(await cartPage.getQuantityCell(firstProductName)).toHaveText("2");
 })
 

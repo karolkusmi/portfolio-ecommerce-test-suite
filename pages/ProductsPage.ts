@@ -6,6 +6,8 @@ export class ProductsPage {
     private inputSearch: Locator;
     private searchButton: Locator;
     private productList: Locator;
+    private addToCartButton: Locator;
+    private addedToCartModal: Locator;
 
     constructor (page: Page) {
         this.page = page;
@@ -13,6 +15,9 @@ export class ProductsPage {
         this.inputSearch = page.getByPlaceholder("Search Product");
         this.searchButton = page.locator("#submit_search")
         this.productList = page.locator(".single-products p");
+        this.addToCartButton = page.locator(".add-to-cart");
+        this.addedToCartModal = page.getByText("Added!");
+
     }
 
     async goToProductsPage() {
@@ -30,5 +35,14 @@ export class ProductsPage {
 
     async getProductsList() {
         return await this.productList.allTextContents();
+    }
+
+    async getFirstProductName() {
+        return (await this.productList.first().textContent())!;
+    }
+
+    async addFirstProductToCart() {
+        await this.addToCartButton.first().click();
+        await this.addedToCartModal.waitFor();
     }
 }
