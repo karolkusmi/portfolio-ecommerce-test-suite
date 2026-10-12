@@ -14,11 +14,11 @@ constructor(page: Page) {
     this.loginButton = page.locator('[data-qa="login-button"]');
 }
 
-async goToLoginPage() {
+async goToLoginPage(): Promise<void> {
     await this.page.goto('https://automationexercise.com/login',{ waitUntil: 'domcontentloaded'});
 }
 
-async login(email: string, password: string) {
+async login(email: string, password: string): Promise<void> {
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
     await this.loginButton.click();

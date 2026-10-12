@@ -1,4 +1,4 @@
-import {Page} from '@playwright/test';
+import {Page, Locator} from '@playwright/test';
 
 export class CartPage{
     private page: Page;
@@ -7,14 +7,18 @@ export class CartPage{
         this.page = page;
     }
 
-    async goToCartPage() {
+    async goToCartPage(): Promise<void> {
         await this.page.goto("https://automationexercise.com/view_cart");
     }
-    getFirstProductNameCell(productName: string) {
-        return  this.page.getByText(productName)  
+
+    getProductRow(productName: string): Locator {
+        return this.page.locator("tr", {hasText: productName});
     }
-    getQuantityCell(productName: string) {
-        return this.page.locator("tr", {hasText: productName}).locator(".cart_quantity")
+    getProductNameCell(productName: string): Locator {
+        return  this.getProductRow(productName).locator(".cart_description");  
+    }
+    getQuantityCell(productName: string): Locator {
+        return this.getProductRow(productName).locator(".cart_quantity")
     }
     
     

@@ -20,28 +20,28 @@ export class ProductsPage {
 
     }
 
-    async goToProductsPage() {
+    async goToProductsPage(): Promise<void> {
         await this.page.goto("https://automationexercise.com/products", {waitUntil: 'domcontentloaded'});
     }
 
-    getFirstProduct() {
+    getFirstProduct(): Locator {
         return this.product.first();
     }
 
-    async searchProduct(word: string) {
+    async searchProduct(word: string): Promise<void> {
         await this.inputSearch.fill(word);
         await this.searchButton.click();
     }
 
-    async getProductsList() {
+    async getProductsList(): Promise<string[]> {
         return await this.productList.allTextContents();
     }
 
-    async getFirstProductName() {
+    async getFirstProductName(): Promise<string> {
         return (await this.productList.first().textContent())!;
     }
 
-    async addFirstProductToCart() {
+    async addFirstProductToCart(): Promise<void> {
         await this.addToCartButton.first().click();
         await this.addedToCartModal.waitFor();
     }

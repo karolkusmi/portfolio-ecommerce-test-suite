@@ -18,7 +18,7 @@ When("I add the first product to the cart", async function() {
 
 Then("I should see the first product visible in the cart", async function() {
     const cartPage = new CartPage(page);
-    await expect(await cartPage.getFirstProductNameCell(firstProductName)).toBeVisible();
+    await expect(await cartPage.getProductNameCell(firstProductName)).toBeVisible();
 })
 
 When("I add the first product to the cart twice", async function() {
