@@ -7,7 +7,7 @@ setDefaultTimeout(60000);
 export let page: Page;
 export let browser: Browser;
 
-Before(async () => {
+Before(async function() {
     browser = await chromium.launch(); 
     page = await browser.newPage();
     await page.route(/doubleclick|googlesyndication|fundingchoices|adservice|googletagservices/, route => route.abort());

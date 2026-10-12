@@ -3,28 +3,29 @@ import {page} from './hooks';
 import {expect} from '@playwright/test';
 import {CartPage} from '../../pages/CartPage';
 import {ProductsPage} from '../../pages/ProductsPage';
+import {CustomWorld} from './world';
 
 
-let firstProductName: string = "";
 
 
-When("I add the first product to the cart", async function() {
+
+When("I add the first product to the cart", async function(this: CustomWorld) {
     const productsPage = new ProductsPage(page);
     const cartPage = new CartPage(page);
-    firstProductName = await productsPage.getFirstProductName();
+    this.firstProductName = await productsPage.getFirstProductName();
     await productsPage.addFirstProductToCart();
     await cartPage.goToCartPage();
 })
 
-Then("I should see the first product visible in the cart", async function() {
+Then("I should see the first product visible in the cart", async function(this: CustomWorld) {
     const cartPage = new CartPage(page);
-    await expect(await cartPage.getProductNameCell(firstProductName)).toBeVisible();
+    await expect(cartPage.getProductNameCell(this.firstProductName)).toBeVisible();
 })
 
-When("I add the first product to the cart twice", async function() {
+When("I add the first product to the cart twice", async function(this: CustomWorld) {
     const productsPage =  new ProductsPage(page);
     const cartPage = new CartPage(page);
-    firstProductName = await productsPage.getFirstProductName();
+    this.firstProductName = await productsPage.getFirstProductName();
     await productsPage.addFirstProductToCart();
     await cartPage.goToCartPage();
     await productsPage.goToProductsPage();
@@ -32,8 +33,8 @@ When("I add the first product to the cart twice", async function() {
     await cartPage.goToCartPage();
 })
 
-Then("I should see that the quantity of the product is two", async function() {
+Then("I should see that the quantity of the product is two", async function(this: CustomWorld) {
     const cartPage = new CartPage(page);
-    await expect(await cartPage.getQuantityCell(firstProductName)).toHaveText("2");
+    await expect( cartPage.getQuantityCell(this.firstProductName)).toHaveText("2");
 })
 
