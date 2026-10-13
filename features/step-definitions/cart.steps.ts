@@ -11,9 +11,12 @@ import {CustomWorld} from './world';
 
 When("I add the first product to the cart", async function(this: CustomWorld) {
     const productsPage = new ProductsPage(page);
-    const cartPage = new CartPage(page);
     this.firstProductName = await productsPage.getFirstProductName();
     await productsPage.addFirstProductToCart();
+})
+
+When("I go to the cart page", async function() {
+    const cartPage = new CartPage(page);
     await cartPage.goToCartPage();
 })
 
@@ -23,18 +26,15 @@ Then("I should see the first product visible in the cart", async function(this: 
 })
 
 When("I add the first product to the cart twice", async function(this: CustomWorld) {
-    const productsPage =  new ProductsPage(page);
-    const cartPage = new CartPage(page);
+    const productsPage = new ProductsPage(page);
     this.firstProductName = await productsPage.getFirstProductName();
     await productsPage.addFirstProductToCart();
-    await cartPage.goToCartPage();
     await productsPage.goToProductsPage();
     await productsPage.addFirstProductToCart();
-    await cartPage.goToCartPage();
 })
 
 Then("I should see that the quantity of the product is two", async function(this: CustomWorld) {
     const cartPage = new CartPage(page);
-    await expect( cartPage.getQuantityCell(this.firstProductName)).toHaveText("2");
+    await expect(cartPage.getQuantityCell(this.firstProductName)).toHaveText("2");
 })
 
