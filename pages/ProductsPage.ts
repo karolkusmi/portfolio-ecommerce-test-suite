@@ -8,15 +8,19 @@ export class ProductsPage {
     private productList: Locator;
     private addToCartButton: Locator;
     private addedToCartModal: Locator;
+    private modalContinueShoppingButton: Locator;
+    private modalViewCartButton: Locator;
 
     constructor (page: Page) {
         this.page = page;
         this.product = page.locator(".single-products");
         this.inputSearch = page.getByPlaceholder("Search Product");
-        this.searchButton = page.locator("#submit_search")
+        this.searchButton = page.locator("#submit_search");
         this.productList = page.locator(".single-products p");
         this.addToCartButton = page.locator(".add-to-cart");
-        this.addedToCartModal = page.getByText("Added!");
+        this.addedToCartModal = page.locator("#cartModal");
+        this.modalContinueShoppingButton = page.getByRole("button", {name: "Continue Shopping"});
+        this.modalViewCartButton = page.getByRole("link", {name: "View Cart"});
 
     }
 
@@ -45,4 +49,14 @@ export class ProductsPage {
         await this.addToCartButton.first().click();
         await this.addedToCartModal.waitFor();
     }
-}
+    getAddedToCartModal(): Locator {
+        return this.addedToCartModal;
+    }
+
+    async closeModal(): Promise<void> {
+        await this.modalContinueShoppingButton.click();
+    }
+
+    async goToCartFromModal(): Promise<void> {
+        await this.modalViewCartButton.click();
+    }}
