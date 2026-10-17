@@ -10,7 +10,9 @@ export class ProductsPage {
     private addedToCartModal: Locator;
     private modalContinueShoppingButton: Locator;
     private modalViewCartButton: Locator;
-
+    private productCard: Locator;
+    
+   
     constructor (page: Page) {
         this.page = page;
         this.product = page.locator(".single-products");
@@ -21,6 +23,8 @@ export class ProductsPage {
         this.addedToCartModal = page.locator("#cartModal");
         this.modalContinueShoppingButton = page.getByRole("button", {name: "Continue Shopping"});
         this.modalViewCartButton = page.getByRole("link", {name: "View Cart"});
+        this.productCard = page.locator(".product-image-wrapper");
+        
 
     }
 
@@ -59,4 +63,13 @@ export class ProductsPage {
 
     async goToCartFromModal(): Promise<void> {
         await this.modalViewCartButton.click();
-    }}
+    }
+
+    async goToFirstProductDetails(): Promise<void> {
+        await this.productCard.first().getByRole("link", {name: "View Product"}).click();
+
+    }
+
+}
+
+    
