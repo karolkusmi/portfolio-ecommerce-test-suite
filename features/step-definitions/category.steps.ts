@@ -18,3 +18,16 @@ Then("I should see the subcategories displayed with Dress, Tops and Saree", asyn
     await expect (categoryPage.getWomenSubcategoriesPanel()).toBeVisible();
     await expect (categoryPage.getWomenSubcategoryLinks()).toHaveText(["Dress", "Tops", "Saree"]);
 })
+
+When("I click on category {string}", async function(category: string) {
+    await page.locator(`.category-products a[href="#${category}"]`).click();
+ })
+
+When("I click on subcategory {string}", async function(subcategory: string) {
+    await page.getByRole("link", {name: subcategory, exact: true}).click();
+})
+
+Then("I should see {string} and {string} title name", async function(category: string, subcategory: string) {
+    await expect(page.getByRole("heading", {level: 2, name: `${category} - ${subcategory}`})).toBeVisible();
+    await expect(page.getByRole("heading", {level: 2, name: `${category} - ${subcategory}`})).toHaveText(`${category} - ${subcategory} Products`);
+})
