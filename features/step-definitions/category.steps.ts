@@ -8,11 +8,6 @@ Then("I should see the sidebar displayed with Women, Men and Kids categories", a
     await expect(categoryPage.getCategoryList()).toHaveText(["Women", "Men", "Kids"]);
     })
 
-When("I click on Women category", async function() {
-    const categoryPage = new CategoryPage(page);
-    await categoryPage.clickWomenCategory();
-})
-
 Then("I should see the subcategories displayed with Dress, Tops and Saree", async function() {
     const categoryPage = new CategoryPage(page);
     await expect (categoryPage.getWomenSubcategoriesPanel()).toBeVisible();
@@ -20,14 +15,17 @@ Then("I should see the subcategories displayed with Dress, Tops and Saree", asyn
 })
 
 When("I click on category {string}", async function(category: string) {
-    await page.locator(`.category-products a[href="#${category}"]`).click();
+    const categoryPage = new CategoryPage(page);
+    await categoryPage.clickCategory(category)
  })
 
 When("I click on subcategory {string}", async function(subcategory: string) {
-    await page.getByRole("link", {name: subcategory, exact: true}).click();
+    const categoryPage = new CategoryPage(page);
+    await categoryPage.clickSubcategory(subcategory);
 })
 
 Then("I should see {string} and {string} title name", async function(category: string, subcategory: string) {
-    await expect(page.getByRole("heading", {level: 2, name: `${category} - ${subcategory}`})).toBeVisible();
-    await expect(page.getByRole("heading", {level: 2, name: `${category} - ${subcategory}`})).toHaveText(`${category} - ${subcategory} Products`);
+    const categoryPage = new CategoryPage(page)
+    await expect(categoryPage.getHeadingTitle(category, subcategory)).toBeVisible();
+    await expect(categoryPage.getHeadingTitle(category, subcategory)).toHaveText(`${category} - ${subcategory} Products`);
 })

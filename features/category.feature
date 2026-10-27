@@ -7,7 +7,7 @@ Feature: category
 
   Scenario: Women category shows subcategories
    Given I am on the products page
-   When I click on Women category 
+   When I click on category "Women"
    Then I should see the subcategories displayed with Dress, Tops and Saree 
 
   Scenario Outline: navigate to a subcategory shows its products page
