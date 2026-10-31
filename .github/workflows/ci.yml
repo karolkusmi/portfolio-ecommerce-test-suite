@@ -6,17 +6,17 @@ on:
 
 jobs:
   test:
-  runs-on: ubuntu-latest
-  steps:
-   - name: download my repo
+   runs-on: ubuntu-latest
+   steps:
+    - name: download my repo
      uses: actions/checkout@v4
-   - name: install Node
+    - name: install Node
      uses: actions/setup-node@v4
-   - name: install dependencies
+    - name: install dependencies
      run: npm ci
-   - name: install browsers
+    - name: install browsers
      run: npx playwright install --with-deps
-   - name: run tests
+    - name: run tests
      run: npm test
      env: 
        EMAIL: ${{ secrets.EMAIL }}
