@@ -9,16 +9,16 @@ jobs:
    runs-on: ubuntu-latest
    steps:
     - name: download my repo
-     uses: actions/checkout@v4
+      uses: actions/checkout@v4
     - name: install Node
-     uses: actions/setup-node@v4
+      uses: actions/setup-node@v4
     - name: install dependencies
-     run: npm ci
+      run: npm ci
     - name: install browsers
-     run: npx playwright install --with-deps
+      run: npx playwright install --with-deps
     - name: run tests
-     run: npm test
-     env: 
+      run: npm test
+      env: 
        EMAIL: ${{ secrets.EMAIL }}
        PASSWORD: ${{ secrets.PASSWORD }}
 
