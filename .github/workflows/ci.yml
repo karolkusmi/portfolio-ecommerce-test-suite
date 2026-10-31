@@ -1,0 +1,24 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+  runs-on: ubuntu-latest
+  steps:
+   - name: download my repo
+     uses: actions/checkout@v4
+   - name: install Node
+     uses: actions/setup-node@v4
+   - name: install dependencies
+     run: npm ci
+   - name: install browsers
+     run: npx playwright install --with-deps
+   - name: run tests
+     run: npm test
+     env: 
+       EMAIL: ${{ secrets.EMAIL }}
+       PASSWORD: ${{ secrets.PASSWORD }}
+
