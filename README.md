@@ -13,9 +13,9 @@ This project tests https://automationexercise.com/ ecommerce, the tests verify t
 - GitHub Actions
 
 ## Test coverage 
-E2E tests
-The features that are tested are: Login, Products, Cart and Category.
-21 scenarios, all passing
+- E2E tests
+- The features that are tested are: Login, Products, Cart and Category.
+- 21 scenarios, all passing
 
 ## Running the tests
 - npm test 
